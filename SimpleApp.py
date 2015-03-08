@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from pyspark import SparkContext, SparkConf, numpy
+from pyspark import SparkContext, SparkConf
+import numpy as np
 # this is the location of the cluster
 master = "spark://ec2-52-10-98-37.us-west-2.compute.amazonaws.com:7077"
 appName = "DataScience HW1 CT"
