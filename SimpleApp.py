@@ -40,7 +40,7 @@ class WordFreqCluster:
 
 
   def groupByWord(self):
-    recentngrams = self.recentngrams
+    recentngrams = self.recentngrams.map(lambda x: x[0::2]) \
     r = recentngrams.groupByKey().count()
     return r
 
