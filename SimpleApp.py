@@ -62,20 +62,27 @@ class WordFreqCluster:
     return r_join_r.take(1)
 
   def find_correlation(self, row):
-    leftword_arr = np.array(row[0][1])
-    rightword_arr = np.array(row[1][1])
+    leftword_pyspark_arr = row[0][1]
+    rightword_pyspark_arr = row[1][1]
 
-    print leftword_arr
-    print rightword_arr
+    leftword_arr = []
+    rightword_arr = []
+    years = []
 
 
     # print "leftword_arr"
-    # for v in leftword_arr:
-    #   print v
+    for v in leftword_pyspark_arr:
+      leftword_arr.append(v)
+
+    leftword_arr = np.array(leftword_arr)
+    print leftword_arr[:,0]
 
     # print "rightword_arr"
-    # for v in rightword_arr:
-    #   print v
+    for v in rightword_arr:
+      rightword_arr.append(v)
+
+    rightword_arr = np.array(rightword_arr)
+    print rightword_arr[:,0]
 
 
 
