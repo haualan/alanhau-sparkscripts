@@ -54,14 +54,19 @@ class WordFreqCluster:
                     .map(lambda x: (x[0], x[1][0])) \
                     
     r_join_r = r.cartesian(r) \
-                .filter(lambda x: x[0][0] != x[1][0]) \
-                .take(1)
+                .filter(lambda x: x[0][0] != x[1][0])
 
-     
-    return r_join_r
+    self.r_join_r = r_join_r
 
-  def find_correlation(self):
-    recentngrams = self.recentngrams
+    return r_join_r.take(1)
+
+  def find_correlation(self, row):
+    leftword = row[0]
+    rightword = row[1]
+
+    for v in leftword[1]:
+      print v
+
 
 
 
@@ -82,6 +87,14 @@ if __name__ == "__main__":
   # numBs = logData.filter(lambda s: 'b' in s).count()
 
   print 'topWordFrequencies:', task2.topWordFrequencies()
-  print 'groupByWord:', task2.groupByWord()
+
+  r_join_r = task2.groupByWord()
+  print 'groupByWord:', r_join_r
   # print 'Øverst_ADV appears: ', task2.wordFrequency('b') 
   # print "Lines with a: %i, lines with b: %i" % (numAs, numBs)
+
+  task2.find_correlation(r_join_r[0])
+
+
+
+
