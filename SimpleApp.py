@@ -45,6 +45,8 @@ class WordFreqCluster:
 
   def groupByWord(self):
     topngrams = self.topngrams
+    print "topngrams type:", type(topngrams), topngrams
+
     recentngrams = self.recentngrams.map(lambda x: (x[0],(x[1], x[2])) )
     r = recentngrams.groupByKey() \
                     .rightOuterJoin(topngrams) \
