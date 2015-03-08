@@ -21,6 +21,9 @@ class WordFreqCluster:
     self.ngramsFile = "sampledata.txt"
     self.ngramsData = sc.textFile(self.ngramsFile).cache()
 
+    # data: ngram TAB year TAB match_count TAB page_count TAB volume_count NEWLINE
+    # sample line: circumvallate   1978   335    91
+
 
   def topWordFrequencies(self):
     r = self.ngramsData.map(split_and_cast) \
@@ -38,7 +41,7 @@ class WordFreqCluster:
 
   def groupByWord(self):
     recentngrams = self.recentngrams
-    r = recentngrams.distinct()\
+    r = recentngrams.groupByKey()\
                     .count()
     return r
 
