@@ -34,9 +34,11 @@ class WordFreqCluster:
     r =r.map(lambda x: x[0::2]) \
                         .reduceByKey(lambda x,y: x+y) \
                         .map(lambda x:(x[1],x[0])) \
-                        .sortByKey(True)
+                        .sortByKey(True) \
+                        .take(10) \
+                        .map(lambda x: x[1])
 
-    return r.take(10)
+    return r
 
 
   def groupByWord(self):
