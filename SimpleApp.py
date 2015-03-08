@@ -68,26 +68,33 @@ class WordFreqCluster:
     leftword_arr = []
     rightword_arr = []
 
-    testarr = [(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]]
-    print "testarr", testarr
+    # XY is a list of intersection points where both words have non-zero frequency
+    XY = np.array([(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]])
+    # print "XY", XY
+    X = XY[:,0]
+    Y = XY[:,1]
+
+    r = np.corrcoef(X, Y)
+
+    print r
 
 
-    # convert leftword_pyspark_arr to a numpy array
-    for v in leftword_pyspark_arr:
-      leftword_arr.append(v)
+    # # convert leftword_pyspark_arr to a numpy array
+    # for v in leftword_pyspark_arr:
+    #   leftword_arr.append(v)
 
-    leftword_arr = np.array(leftword_arr)
-    print leftword_arr[:,0]
+    # leftword_arr = np.array(leftword_arr)
+    # print leftword_arr[:,0]
 
-    # convert rightword_pyspark_arr to a numpy array
-    for v in rightword_pyspark_arr:
-      rightword_arr.append(v)
+    # # convert rightword_pyspark_arr to a numpy array
+    # for v in rightword_pyspark_arr:
+    #   rightword_arr.append(v)
 
-    rightword_arr = np.array(rightword_arr)
-    print rightword_arr[:,0]
+    # rightword_arr = np.array(rightword_arr)
+    # print rightword_arr[:,0]
 
-    # gather unique years
-    uniqueYears = np.intersect1d(leftword_arr[:,0],rightword_arr[:,0])
+    # # gather unique years
+    # uniqueYears = np.intersect1d(leftword_arr[:,0],rightword_arr[:,0])
 
 
 
