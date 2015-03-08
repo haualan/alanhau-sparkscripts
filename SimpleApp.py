@@ -67,6 +67,11 @@ class WordFreqCluster:
     for v in leftword[1]:
       print v
 
+    for v in rightword[1]:
+      print v
+
+
+
 
 
 
