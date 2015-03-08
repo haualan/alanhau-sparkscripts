@@ -67,22 +67,29 @@ class WordFreqCluster:
 
     leftword_arr = []
     rightword_arr = []
-    years = []
+
+    testarr = [(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]]
+    print "testarr", testarr
 
 
-    # print "leftword_arr"
+    # convert leftword_pyspark_arr to a numpy array
     for v in leftword_pyspark_arr:
       leftword_arr.append(v)
 
     leftword_arr = np.array(leftword_arr)
     print leftword_arr[:,0]
 
-    # print "rightword_arr"
-    for v in rightword_arr:
+    # convert rightword_pyspark_arr to a numpy array
+    for v in rightword_pyspark_arr:
       rightword_arr.append(v)
 
     rightword_arr = np.array(rightword_arr)
     print rightword_arr[:,0]
+
+    # gather unique years
+    uniqueYears = np.intersect1d(leftword_arr[:,0],rightword_arr[:,0])
+
+
 
 
 
