@@ -55,11 +55,17 @@ class WordFreqCluster:
                     .map(lambda x: (x[0], x[1][0])) \
                     
     r_join_r = r.cartesian(r) \
-                .filter(lambda x: x[0][0] != x[1][0])
+                .filter(lambda x: x[0][0] != x[1][0]).cache()
 
     self.r_join_r = r_join_r
 
     return r_join_r.take(1)
+
+  def map_correlation(self):
+    r_join_r = self.r_join_r
+    r = r_join_r.map(lambda x: self.find_correlation(x)).take(5)
+
+    print r
 
   def find_correlation(self, row):
     leftword_pyspark_arr = row[0][1]
@@ -77,15 +83,15 @@ class WordFreqCluster:
     r = np.corrcoef(X, Y)[0][1]
 
 
-    print r, row[0][0], row[1][0]
+    # print r, row[0][0], row[1][0]
 
     # generate a unique word pair as key so we can run distinct on RDD
     if row[0][1] > row[1][0]:
-      print "{}|{}".format(row[0][0], row[1][0])
+      key =  "{}|{}".format(row[0][0], row[1][0])
     else:
-      print "{}|{}".format(row[1][0], row[0][0])
+      key =  "{}|{}".format(row[1][0], row[0][0])
 
-    return r
+    return key, r, len(XY)
 
 
     # # convert leftword_pyspark_arr to a numpy array
@@ -135,7 +141,7 @@ if __name__ == "__main__":
   # print 'Øverst_ADV appears: ', task2.wordFrequency('b') 
   # print "Lines with a: %i, lines with b: %i" % (numAs, numBs)
 
-  task2.find_correlation(r_join_r[0])
+  print task2.find_correlation(r_join_r[0])
 
 
 
