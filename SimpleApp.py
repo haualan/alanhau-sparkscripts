@@ -35,8 +35,8 @@ class WordFreqCluster:
                         .reduceByKey(lambda x,y: x+y) \
                         .map(lambda x:(x[1],x[0])) \
                         .sortByKey(True) \
-                        .take(10) \
-                        .map(lambda x: x[1])
+                        .map(lambda x: x[1]) \
+                        .take(10)
 
     return r
 
