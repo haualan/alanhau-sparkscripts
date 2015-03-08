@@ -80,9 +80,9 @@ class WordFreqCluster:
 
     # generate a unique word pair as key so we can run distinct on RDD
     if row[0][1] > row[1][0]:
-      print "{}|{}".format(row[0][1], row[1][0])
+      print "{}|{}".format(row[0][0], row[1][0])
     else:
-      print "{}|{}".format(row[1][0], row[0][1])
+      print "{}|{}".format(row[1][0], row[0][0])
 
     return r
 
