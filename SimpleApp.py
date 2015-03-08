@@ -77,6 +77,13 @@ class WordFreqCluster:
     r = np.corrcoef(X, Y)[0][1]
 
     print r
+
+    # generate a unique word pair as key so we can run distinct on RDD
+    if row[0][1] > row[1][0]:
+      print "%s|%s".format(row[0][1], row[1][0])
+    else:
+      print "%s|%s".format(row[1][0], row[0][1])
+
     return r
 
 
