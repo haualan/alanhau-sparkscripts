@@ -54,7 +54,7 @@ class WordFreqCluster:
                     .map(lambda x: (x[0], x[1][0])) \
                     
     r_join_r = r.cartesian(r) \
-                .filter(lambda x: x[0][0] != x[1][0])
+                .filter(lambda x: x[0][0] != x[1][0]) \
                 .take(1)
 
      
