@@ -35,8 +35,8 @@ class WordFreqCluster:
                         .reduceByKey(lambda x,y: x+y) \
                         .map(lambda x:(x[1],x[0])) \
                         .sortByKey(True) \
-                        # .map(lambda x: x[1]) \
                         .take(5)
+                        # .map(lambda x: x[1]) \
 
     self.topngrams = sc.parallelize(r)
 
