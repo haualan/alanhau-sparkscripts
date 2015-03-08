@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
   print task2.find_correlation(r_join_r[0])
 
-  print "map_correlation". task2.map_correlation()
+  print "map_correlation", task2.map_correlation()
 
 
 
