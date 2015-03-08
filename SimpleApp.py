@@ -65,14 +65,17 @@ class WordFreqCluster:
     leftword_arr = np.array(row[0][1])
     rightword_arr = np.array(row[1][1])
 
+    print leftword_arr
+    print rightword_arr
 
-    print "leftword_arr"
-    for v in leftword_arr:
-      print v
 
-    print "rightword_arr"
-    for v in rightword_arr:
-      print v
+    # print "leftword_arr"
+    # for v in leftword_arr:
+    #   print v
+
+    # print "rightword_arr"
+    # for v in rightword_arr:
+    #   print v
 
 
 
