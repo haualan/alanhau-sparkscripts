@@ -41,7 +41,7 @@ class WordFreqCluster:
 
   def groupByWord(self):
     recentngrams = self.recentngrams
-    r = recentngrams.groupByKey()
+    r = recentngrams.groupByKey().count()
     return r
 
   def find_correlation(self):
