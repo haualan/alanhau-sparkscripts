@@ -36,14 +36,19 @@ class WordFreqCluster:
                         .map(lambda x:(x[1],x[0])) \
                         .sortByKey(True) \
                         .map(lambda x: x[1]) \
-                        .take(10)
+                        .take(5)
+
+    self.topngrams = r
 
     return r
 
 
   def groupByWord(self):
+    topngrams = self.topngrams
     recentngrams = self.recentngrams.map(lambda x: (x[0],(x[1], x[2])) )
-    r = recentngrams.groupByKey().take(5)
+    r = recentngrams.groupByKey() \
+                    .rightOuterJoin(topngrams)
+                    .take(10)
     return r
 
   def find_correlation(self):
