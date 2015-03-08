@@ -52,10 +52,12 @@ class WordFreqCluster:
     r = recentngrams.groupByKey() \
                     .join(topngrams) \
                     .map(lambda x: (x[0], x[1][0])) \
-                    .take(10)
+                    
+    r_join_r = r.cartesian(r) \
+                .take(10)
 
      
-    return r
+    return r_join_r
 
   def find_correlation(self):
     recentngrams = self.recentngrams
