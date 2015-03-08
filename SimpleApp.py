@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from pyspark import SparkContext, SparkConf
+from pyspark import SparkContext, SparkConf, numpy
 # this is the location of the cluster
 master = "spark://ec2-52-10-98-37.us-west-2.compute.amazonaws.com:7077"
 appName = "DataScience HW1 CT"
@@ -61,13 +61,16 @@ class WordFreqCluster:
     return r_join_r.take(1)
 
   def find_correlation(self, row):
-    leftword = row[0]
-    rightword = row[1]
+    leftword_arr = np.array(row[0][1])
+    rightword_arr = np.array(row[1][1])
 
-    for v in leftword[1]:
+
+    print "leftword_arr"
+    for v in leftword_arr:
       print v
 
-    for v in rightword[1]:
+    print "rightword_arr"
+    for v in rightword_arr:
       print v
 
 
