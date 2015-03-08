@@ -74,9 +74,10 @@ class WordFreqCluster:
     X = XY[:,0]
     Y = XY[:,1]
 
-    r = np.corrcoef(X, Y)
+    r = np.corrcoef(X, Y)[0][1]
 
     print r
+    return r
 
 
     # # convert leftword_pyspark_arr to a numpy array
