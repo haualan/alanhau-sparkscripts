@@ -38,7 +38,7 @@ class WordFreqCluster:
                         .map(lambda x: x[1]) \
                         .take(5)
 
-    self.topngrams = r
+    self.topngrams = sc.parallelize(r)
 
     return r
 
