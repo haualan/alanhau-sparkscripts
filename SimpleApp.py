@@ -3,8 +3,8 @@
 from pyspark import SparkContext, SparkConf
 import numpy as np
 # this is the location of the cluster
-# master = "spark://ec2-52-10-98-37.us-west-2.compute.amazonaws.com:7077"
-master = "local"
+master = "spark://ec2-52-11-220-71.us-west-2.compute.amazonaws.com:7077"
+# master = "local"
 appName = "DataScience HW1 CT"
 
 conf = SparkConf().setAppName(appName).setMaster(master)
@@ -30,8 +30,8 @@ class WordFreqCluster:
 
     # self.ngramsFile = "googlebooks-eng-all-1gram-20120701-other"  # Should be some file on HDFS
     # self.ngramsFile = "sampledata.txt"
-    # self.ngramsFile = "s3n://alanhau/sampledata.txt"
-    self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
+    self.ngramsFile = "s3n://alanhau/sampledata.txt"
+    # self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
 
     self.ngramsData = sc.textFile(self.ngramsFile)
 
