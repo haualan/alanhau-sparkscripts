@@ -30,8 +30,8 @@ class WordFreqCluster:
 
     # self.ngramsFile = "googlebooks-eng-all-1gram-20120701-other"  # Should be some file on HDFS
     # self.ngramsFile = "sampledata.txt"
-    self.ngramsFile = "s3n://alanhau/sampledata.txt"
-    # self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
+    # self.ngramsFile = "s3n://alanhau/sampledata.txt"
+    self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
 
     self.ngramsData = sc.textFile(self.ngramsFile)
 
