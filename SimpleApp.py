@@ -97,7 +97,7 @@ def find_correlation(row):
   else:
     key =  row[1][0] + '|' + row[0][0]
 
-  return key, r, len(XY), XY
+  return key, r, len(XY), XY.tolist()
 
 
 # plan:
