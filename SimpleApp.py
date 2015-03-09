@@ -15,7 +15,7 @@ def split_and_cast(x):
   return r
 
 def exportToFile(lst, filename):
-  fout = open('~/' + filename,'w')
+  fout = open(filename,'w')
   fout.write(str(lst))
 
   fout.close()
