@@ -10,6 +10,13 @@ appName = "DataScience HW1 CT"
 conf = SparkConf().setAppName(appName).setMaster(master)
 sc = SparkContext(conf=conf)
 
+datafiles = [
+'sampledata.txt', 
+'googlebooks-eng-all-1gram-20120701-other'
+
+
+]
+
 def split_and_cast(x):
   r = x.split()[0:3]
   r = tuple([r[0],int(r[1]),int(r[2])])
@@ -31,9 +38,17 @@ class WordFreqCluster:
     # self.ngramsFile = "googlebooks-eng-all-1gram-20120701-other"  # Should be some file on HDFS
     # self.ngramsFile = "sampledata.txt"
     # self.ngramsFile = "s3n://alanhau/sampledata.txt"
-    self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
+    # self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
 
-    self.ngramsData = sc.textFile(self.ngramsFile)
+    # self.ngramsData = sc.textFile(self.ngramsFile)
+
+    for k, f in enumerate(datafiles):
+      ngramsFile = "s3n://alanhau/" + f 
+      ngramsData = sc.textFile(self.ngramsFile)
+      if k > 0:
+        ngramsData.union(ngramsFile)
+
+    self.ngramsData = ngramsData
 
     # data: ngram TAB year TAB match_count TAB page_count TAB volume_count NEWLINE
     # sample line: circumvallate   1978   335    91
