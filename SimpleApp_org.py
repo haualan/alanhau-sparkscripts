@@ -30,10 +30,10 @@ class WordFreqCluster:
 
     # self.ngramsFile = "googlebooks-eng-all-1gram-20120701-other"  # Should be some file on HDFS
     # self.ngramsFile = "sampledata.txt"
-    self.ngramsFile = "s3n://alanhau/sampledata.txt"
-    # self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
+    # self.ngramsFile = "s3n://alanhau/sampledata.txt"
+    self.ngramsFile = "s3n://alanhau/googlebooks-eng-all-1gram-20120701-a"
 
-    self.ngramsData = sc.textFile(self.ngramsFile)
+    self.ngramsData = sc.textFile(self.ngramsFile).cache()
 
     # data: ngram TAB year TAB match_count TAB page_count TAB volume_count NEWLINE
     # sample line: circumvallate   1978   335    91
@@ -41,7 +41,7 @@ class WordFreqCluster:
 
   def topWordFrequencies(self):
     r = self.ngramsData.map(split_and_cast) \
-                        .filter(lambda x: x[1] > 1980 )
+                        .filter(lambda x: x[1] > 1980 ).cache()
 
     self.recentngrams= r
 
@@ -69,7 +69,7 @@ class WordFreqCluster:
                     .map(lambda x: (x[0], x[1][0])) \
                     
     r_join_r = r.cartesian(r) \
-                .filter(lambda x: x[0][0] != x[1][0])
+                .filter(lambda x: x[0][0] != x[1][0]).cache()
 
     self.r_join_r = r_join_r
 
@@ -79,7 +79,8 @@ class WordFreqCluster:
     r_join_r = self.r_join_r
     r = r_join_r.map(lambda x: find_correlation(x)) \
                 .distinct() \
-                .map(lambda x: (x[1],(x[0],x[2]))) 
+                .map(lambda x: (x[1],(x[0],x[2]))) \
+                .cache()
 
     # r.saveAsTextFile('~/correl.txt')
 
