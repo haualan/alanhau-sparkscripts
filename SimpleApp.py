@@ -14,6 +14,13 @@ def split_and_cast(x):
   r = tuple([r[0],int(r[1]),int(r[2])])
   return r
 
+def exportToFile(lst, filename):
+  fout = open('~/' + filename,'w')
+  fout.write(str(lst))
+
+  fout.close()
+
+
 
 class WordFreqCluster:
   """HW1 Task2, examine unigram frequencies, find those with highly correlated frequencies and those with low correlated frequencies"""
@@ -71,9 +78,14 @@ class WordFreqCluster:
 
     r.saveAsTextFile('~/correl.txt')
 
-    print 'ascending correl', r.sortByKey(True).take(100)
+    asc_correl = r.sortByKey(True).take(100)
+    print 'ascending correl', asc_correl
+    exportToFile(asc_correl,'asc_correl.txt')
 
-    print 'descending correl', r.sortByKey(False).take(100)
+
+    desc_correl = r.sortByKey(False).take(100)
+    print 'descending correl', desc_correl
+    exportToFile(desc_correl, 'desc_correl.txt')
 
 def find_correlation(row):
   leftword_pyspark_arr = row[0][1]
