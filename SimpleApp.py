@@ -85,6 +85,9 @@ def find_correlation(row):
   else:
     r = 0
 
+  if np.isnan(r):
+    print 'isNAN',XY, np.corrcoef(X, Y)
+
 
   # print r, row[0][0], row[1][0]
 
