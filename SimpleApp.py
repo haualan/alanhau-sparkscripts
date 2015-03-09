@@ -63,35 +63,35 @@ class WordFreqCluster:
 
   def map_correlation(self):
     r_join_r = self.r_join_r
-    r = r_join_r.map(lambda x: self.find_correlation(x)).take(5)
+    r = r_join_r.map(lambda x: find_correlation(x)).take(5)
 
     print r
 
-  def find_correlation(self, row):
-    leftword_pyspark_arr = row[0][1]
-    rightword_pyspark_arr = row[1][1]
+def find_correlation(row):
+  leftword_pyspark_arr = row[0][1]
+  rightword_pyspark_arr = row[1][1]
 
-    leftword_arr = []
-    rightword_arr = []
+  leftword_arr = []
+  rightword_arr = []
 
-    # XY is a list of intersection points where both words have non-zero frequency
-    XY = np.array([(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]])
-    # print "XY", XY
-    X = XY[:,0]
-    Y = XY[:,1]
+  # XY is a list of intersection points where both words have non-zero frequency
+  XY = np.array([(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]])
+  # print "XY", XY
+  X = XY[:,0]
+  Y = XY[:,1]
 
-    r = np.corrcoef(X, Y)[0][1]
+  r = np.corrcoef(X, Y)[0][1]
 
 
-    # print r, row[0][0], row[1][0]
+  # print r, row[0][0], row[1][0]
 
-    # generate a unique word pair as key so we can run distinct on RDD
-    if row[0][1] > row[1][0]:
-      key =  row[0][0] + '|' + row[1][0]
-    else:
-      key =  row[1][0] + '|' + row[0][0]
+  # generate a unique word pair as key so we can run distinct on RDD
+  if row[0][1] > row[1][0]:
+    key =  row[0][0] + '|' + row[1][0]
+  else:
+    key =  row[1][0] + '|' + row[0][0]
 
-    return key, r, len(XY)
+  return key, r, len(XY)
 
 
     # # convert leftword_pyspark_arr to a numpy array
@@ -141,7 +141,7 @@ if __name__ == "__main__":
   # print 'Øverst_ADV appears: ', task2.wordFrequency('b') 
   # print "Lines with a: %i, lines with b: %i" % (numAs, numBs)
 
-  print task2.find_correlation(r_join_r[0])
+  print find_correlation(r_join_r[0])
 
   print "map_correlation", task2.map_correlation()
 
