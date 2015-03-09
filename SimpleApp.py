@@ -63,9 +63,15 @@ class WordFreqCluster:
 
   def map_correlation(self):
     r_join_r = self.r_join_r
-    r = r_join_r.map(lambda x: find_correlation(x)).distinct().take(5)
+    r = r_join_r.map(lambda x: find_correlation(x)) \
+                .distinct() \
+                .map(lambda x: (x[1],x[0],x[3])) \
+                .cache()
 
-    print r
+
+    print 'ascending correl', r.sortByKey(True).take(10)
+
+    print 'descending correl', r.sortByKey(False).take(10)
 
 def find_correlation(row):
   leftword_pyspark_arr = row[0][1]
