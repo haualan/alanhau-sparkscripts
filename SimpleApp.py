@@ -26,8 +26,9 @@ def exportToFile(lst, filename):
 class WordFreqCluster:
   """HW1 Task2, examine unigram frequencies, find those with highly correlated frequencies and those with low correlated frequencies"""
   def __init__(self):
-    # self.ngramsFile = "googlebooks-eng-all-1gram-20120701-a"  # Should be some file on HDFS
-    self.ngramsFile = "sampledata.txt"
+    
+    self.ngramsFile = "googlebooks-eng-all-1gram-20120701-a"  # Should be some file on HDFS
+    # self.ngramsFile = "sampledata.txt"
     self.ngramsData = sc.textFile(self.ngramsFile).cache()
 
     # data: ngram TAB year TAB match_count TAB page_count TAB volume_count NEWLINE
@@ -56,7 +57,7 @@ class WordFreqCluster:
 
   def groupByWord(self):
     topngrams = self.topngrams
-    print "topngrams type:", type(topngrams), topngrams
+    # print "topngrams type:", type(topngrams), topngrams
 
     recentngrams = self.recentngrams.map(lambda x: (x[0],(x[1], x[2])) )
     r = recentngrams.groupByKey() \
@@ -80,12 +81,12 @@ class WordFreqCluster:
     # r.saveAsTextFile('~/correl.txt')
 
     asc_correl = r.sortByKey(True).take(100)
-    print 'ascending correl', asc_correl
+    # print 'ascending correl', asc_correl
     exportToFile(asc_correl,'asc_correl.txt')
 
 
     desc_correl = r.sortByKey(False).take(100)
-    print 'descending correl', desc_correl
+    # print 'descending correl', desc_correl
     exportToFile(desc_correl, 'desc_correl.txt')
 
 def find_correlation(row):
