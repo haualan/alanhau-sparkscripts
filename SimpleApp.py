@@ -63,7 +63,7 @@ class WordFreqCluster:
 
   def map_correlation(self):
     r_join_r = self.r_join_r
-    r = r_join_r.map(lambda x: find_correlation(x)).take(5)
+    r = r_join_r.map(lambda x: find_correlation(x)).distinct().take(5)
 
     print r
 
@@ -80,7 +80,10 @@ def find_correlation(row):
   X = XY[:,0]
   Y = XY[:,1]
 
-  r = np.corrcoef(X, Y)[0][1]
+  if len(XY) > 2:
+    r = np.corrcoef(X, Y)[0][1]
+  else:
+    r = 0
 
 
   # print r, row[0][0], row[1][0]
@@ -93,33 +96,6 @@ def find_correlation(row):
 
   return key, r, len(XY)
 
-
-    # # convert leftword_pyspark_arr to a numpy array
-    # for v in leftword_pyspark_arr:
-    #   leftword_arr.append(v)
-
-    # leftword_arr = np.array(leftword_arr)
-    # print leftword_arr[:,0]
-
-    # # convert rightword_pyspark_arr to a numpy array
-    # for v in rightword_pyspark_arr:
-    #   rightword_arr.append(v)
-
-    # rightword_arr = np.array(rightword_arr)
-    # print rightword_arr[:,0]
-
-    # # gather unique years
-    # uniqueYears = np.intersect1d(leftword_arr[:,0],rightword_arr[:,0])
-
-
-
-
-
-
-
-
-
-  # def correl(self, word1, word2):
 
 # plan:
 # 1. count frequencies of last 50 years group by word, grab 100 most frequent unigrams
@@ -141,7 +117,7 @@ if __name__ == "__main__":
   # print 'Øverst_ADV appears: ', task2.wordFrequency('b') 
   # print "Lines with a: %i, lines with b: %i" % (numAs, numBs)
 
-  print find_correlation(r_join_r[0])
+  # print find_correlation(r_join_r[0])
 
   print "map_correlation", task2.map_correlation()
 
