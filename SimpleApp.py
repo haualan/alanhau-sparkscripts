@@ -76,7 +76,7 @@ class WordFreqCluster:
                 .map(lambda x: (x[1],(x[0],x[2]))) \
                 .cache()
 
-    r.saveAsTextFile('~/correl.txt')
+    # r.saveAsTextFile('~/correl.txt')
 
     asc_correl = r.sortByKey(True).take(100)
     print 'ascending correl', asc_correl
