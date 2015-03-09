@@ -3,7 +3,8 @@
 from pyspark import SparkContext, SparkConf
 import numpy as np
 # this is the location of the cluster
-master = "spark://ec2-52-10-98-37.us-west-2.compute.amazonaws.com:7077"
+# master = "spark://ec2-52-10-98-37.us-west-2.compute.amazonaws.com:7077"
+master = "local"
 appName = "DataScience HW1 CT"
 
 conf = SparkConf().setAppName(appName).setMaster(master)
