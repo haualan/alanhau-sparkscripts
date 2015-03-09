@@ -59,7 +59,7 @@ class WordFreqCluster:
 
     self.r_join_r = r_join_r
 
-    return r_join_r.take(10)
+    return r_join_r.take(3)
 
   def map_correlation(self):
     r_join_r = self.r_join_r
@@ -85,19 +85,20 @@ def find_correlation(row):
   else:
     r = 0
 
-  # if np.isnan(r):
-  #   print 'isNAN',XY, np.corrcoef(X, Y)
+  if np.isnan(r):
+    r = 0
 
 
   # print r, row[0][0], row[1][0]
 
   # generate a unique word pair as key so we can run distinct on RDD
-  if row[0][1] > row[1][0]:
+  if row[0][0] > row[1][0]:
     key =  row[0][0] + '|' + row[1][0]
   else:
     key =  row[1][0] + '|' + row[0][0]
 
-  return key, r, len(XY), XY.tolist()
+  # return key, r, len(XY), XY.tolist()
+  return key, r, len(XY)
 
 
 # plan:
@@ -123,7 +124,7 @@ if __name__ == "__main__":
   for v in r_join_r:
     print find_correlation(v)
 
-  # print "map_correlation", task2.map_correlation()
+  print "map_correlation", task2.map_correlation()
 
 
 
