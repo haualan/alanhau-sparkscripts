@@ -46,7 +46,7 @@ class WordFreqCluster:
       ngramsFile = "s3n://alanhau/" + f 
       ngramsData = sc.textFile(ngramsFile)
       if k > 0:
-        ngramsData.union(ngramsFile)
+        ngramsData.union(ngramsData)
 
     self.ngramsData = ngramsData
 
