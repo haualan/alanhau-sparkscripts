@@ -70,7 +70,7 @@ class WordFreqCluster:
 
     print r.take(10)
     
-    # print 'ascending correl', r.sortByKey(True).take(10)
+    print 'ascending correl', r.sortByKey(True).take(10)
 
     # print 'descending correl', r.sortByKey(False).take(10)
 
