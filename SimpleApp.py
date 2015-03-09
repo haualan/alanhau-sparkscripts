@@ -29,8 +29,8 @@ class WordFreqCluster:
   def __init__(self):
 
     # self.ngramsFile = "googlebooks-eng-all-1gram-20120701-other"  # Should be some file on HDFS
-    self.ngramsFile = "sampledata.txt"
-    # self.ngramsFile = "s3n://alanhau/sampledata.txt"
+    # self.ngramsFile = "sampledata.txt"
+    self.ngramsFile = "s3n://alanhau/sampledata.txt"
 
     self.ngramsData = sc.textFile(self.ngramsFile).cache()
 
