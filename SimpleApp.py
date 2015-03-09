@@ -17,7 +17,7 @@ def split_and_cast(x):
 def exportToFile(lst, filename):
   fout = open(filename,'w')
   for i in lst:
-    fout.write(str(i))
+    fout.write(str(i) + '\n')
 
   fout.close()
 
