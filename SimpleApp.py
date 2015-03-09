@@ -32,12 +32,13 @@ class WordFreqCluster:
 
     self.recentngrams= r
 
+    # NOte here we are only examining / taking top 100 unigrams to do a correlation matrix.
     r =r.map(lambda x: x[0::2]) \
                         .reduceByKey(lambda x,y: x+y) \
                         .map(lambda x:(x[1],x[0])) \
                         .sortByKey(True) \
                         .map(lambda x:(x[1],x[0])) \
-                        .take(5)
+                        .take(100)
 
 
     self.topngrams = sc.parallelize(r)
@@ -68,11 +69,11 @@ class WordFreqCluster:
                 .map(lambda x: (x[1],(x[0],x[2]))) \
                 .cache()
 
-    print r.take(10)
+    r.saveAsTextFile('~/correl.txt')
 
-    print 'ascending correl', r.sortByKey(True).take(10)
+    print 'ascending correl', r.sortByKey(True).take(100)
 
-    print 'descending correl', r.sortByKey(False).take(10)
+    print 'descending correl', r.sortByKey(False).take(100)
 
 def find_correlation(row):
   leftword_pyspark_arr = row[0][1]
@@ -118,8 +119,7 @@ def find_correlation(row):
 if __name__ == "__main__":
   task2 = WordFreqCluster()
 
-  # numAs = logData.filter(lambda s: 'a' in s).count()
-  # numBs = logData.filter(lambda s: 'b' in s).count()
+ 
 
   print 'topWordFrequencies:', task2.topWordFrequencies()
 
