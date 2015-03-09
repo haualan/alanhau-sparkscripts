@@ -49,7 +49,7 @@ class WordFreqCluster:
     r =r.map(lambda x: x[0::2]) \
                         .reduceByKey(lambda x,y: x+y) \
                         .map(lambda x:(x[1],x[0])) \
-                        .sortByKey(True) \
+                        .sortByKey(False) \
                         .map(lambda x:(x[1],x[0])) \
                         .take(100)
 
@@ -102,16 +102,20 @@ def find_correlation(row):
   # XY is a list of intersection points where both words have non-zero frequency
   XY = np.array([(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]])
   # print "XY", XY
-  X = XY[:,0]
-  Y = XY[:,1]
 
-  if len(XY) > 2:
-    r = np.corrcoef(X, Y)[0][1]
-  else:
-    r = 0
+  try:
+    X = XY[:,0]
+    Y = XY[:,1]
 
-  if np.isnan(r):
-    r = 0
+    if len(XY) > 2:
+      r = np.corrcoef(X, Y)[0][1]
+    else:
+      r = 0
+
+    if np.isnan(r):
+      r = 0
+  except:
+      r = 0
 
 
   # print r, row[0][0], row[1][0]
