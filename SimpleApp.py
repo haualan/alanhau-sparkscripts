@@ -26,9 +26,11 @@ def exportToFile(lst, filename):
 class WordFreqCluster:
   """HW1 Task2, examine unigram frequencies, find those with highly correlated frequencies and those with low correlated frequencies"""
   def __init__(self):
-    
-    self.ngramsFile = "googlebooks-eng-all-1gram-20120701-a"  # Should be some file on HDFS
+
+    # self.ngramsFile = "googlebooks-eng-all-1gram-20120701-a"  # Should be some file on HDFS
     # self.ngramsFile = "sampledata.txt"
+    self.ngramsFile = "s3n://alanhau/sampledata.txt"
+
     self.ngramsData = sc.textFile(self.ngramsFile).cache()
 
     # data: ngram TAB year TAB match_count TAB page_count TAB volume_count NEWLINE
