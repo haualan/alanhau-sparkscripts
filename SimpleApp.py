@@ -59,7 +59,7 @@ class WordFreqCluster:
 
     self.r_join_r = r_join_r
 
-    return r_join_r.take(1)
+    return r_join_r.take(10)
 
   def map_correlation(self):
     r_join_r = self.r_join_r
@@ -120,9 +120,10 @@ if __name__ == "__main__":
   # print 'Øverst_ADV appears: ', task2.wordFrequency('b') 
   # print "Lines with a: %i, lines with b: %i" % (numAs, numBs)
 
-  # print find_correlation(r_join_r[0])
+  for v in r_join_r:
+    print find_correlation(v)
 
-  print "map_correlation", task2.map_correlation()
+  # print "map_correlation", task2.map_correlation()
 
 
 
