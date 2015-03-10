@@ -133,17 +133,18 @@ class WordFreqCluster:
     exportToFile(desc_correl, 'desc_correl.txt')
 
 def find_correlation(row):
-  leftword_pyspark_arr = row[0][1]
-  rightword_pyspark_arr = row[1][1]
-
-  leftword_arr = []
-  rightword_arr = []
-
-  # XY is a list of intersection points where both words have non-zero frequency
-  XY = np.array([(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]])
-  # print "XY", XY
-
   try:
+    leftword_pyspark_arr = row[0][1]
+    rightword_pyspark_arr = row[1][1]
+
+    leftword_arr = []
+    rightword_arr = []
+
+    # XY is a list of intersection points where both words have non-zero frequency
+    XY = np.array([(x[1], y[1]) for x in leftword_pyspark_arr for y in rightword_pyspark_arr if x[0] == y[0]])
+    # print "XY", XY
+
+  
     X = XY[:,0]
     Y = XY[:,1]
 
@@ -156,6 +157,7 @@ def find_correlation(row):
       r = 0
   except:
       r = 0
+      XY = []
 
 
   # print r, row[0][0], row[1][0]
