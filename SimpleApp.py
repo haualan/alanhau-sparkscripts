@@ -109,7 +109,7 @@ class WordFreqCluster:
                     .map(lambda x: (x[0], x[1][0])) \
                     
     r_join_r = r.cartesian(r) \
-                .filter(lambda x: x[0][0] != x[1][0])
+                .filter(lambda x: x[0][0] != x[1][0]).cache()
 
     self.r_join_r = r_join_r
 
@@ -119,7 +119,8 @@ class WordFreqCluster:
     r_join_r = self.r_join_r
     r = r_join_r.map(lambda x: find_correlation(x)) \
                 .distinct() \
-                .map(lambda x: (x[1],(x[0],x[2]))) 
+                .map(lambda x: (x[1],(x[0],x[2]))) \
+                .cache() 
 
     # r.saveAsTextFile('~/correl.txt')
 
