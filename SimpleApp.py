@@ -27,7 +27,7 @@ datafiles = [
 # 'googlebooks-eng-all-1gram-20120701-n',
 # 'googlebooks-eng-all-1gram-20120701-o',
 # 'googlebooks-eng-all-1gram-20120701-other',
-'googlebooks-eng-all-1gram-20120701-p',
+# 'googlebooks-eng-all-1gram-20120701-p',
 'googlebooks-eng-all-1gram-20120701-q',
 'googlebooks-eng-all-1gram-20120701-r',
 'googlebooks-eng-all-1gram-20120701-s',
