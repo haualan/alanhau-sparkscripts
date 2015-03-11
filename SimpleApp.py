@@ -11,32 +11,32 @@ conf = SparkConf().setAppName(appName).setMaster(master)
 sc = SparkContext(conf=conf)
 
 datafiles = [
-'googlebooks-eng-all-1gram-20120701-a',
-'googlebooks-eng-all-1gram-20120701-b',
-'googlebooks-eng-all-1gram-20120701-c',
-'googlebooks-eng-all-1gram-20120701-d',
-'googlebooks-eng-all-1gram-20120701-e', 
-'googlebooks-eng-all-1gram-20120701-f',
-'googlebooks-eng-all-1gram-20120701-g',
-'googlebooks-eng-all-1gram-20120701-h',
-'googlebooks-eng-all-1gram-20120701-i',
-'googlebooks-eng-all-1gram-20120701-j',
-'googlebooks-eng-all-1gram-20120701-k',
-'googlebooks-eng-all-1gram-20120701-l',
-'googlebooks-eng-all-1gram-20120701-m',
-'googlebooks-eng-all-1gram-20120701-n',
-'googlebooks-eng-all-1gram-20120701-o',
-'googlebooks-eng-all-1gram-20120701-other',
-'googlebooks-eng-all-1gram-20120701-p',
-'googlebooks-eng-all-1gram-20120701-q',
-'googlebooks-eng-all-1gram-20120701-r',
-'googlebooks-eng-all-1gram-20120701-s',
-'googlebooks-eng-all-1gram-20120701-t',
-'googlebooks-eng-all-1gram-20120701-u',
-'googlebooks-eng-all-1gram-20120701-v',
-'googlebooks-eng-all-1gram-20120701-w',
-'googlebooks-eng-all-1gram-20120701-x',
-'googlebooks-eng-all-1gram-20120701-y',
+# 'googlebooks-eng-all-1gram-20120701-a',
+# 'googlebooks-eng-all-1gram-20120701-b',
+# 'googlebooks-eng-all-1gram-20120701-c',
+# 'googlebooks-eng-all-1gram-20120701-d',
+# 'googlebooks-eng-all-1gram-20120701-e', 
+# 'googlebooks-eng-all-1gram-20120701-f',
+# 'googlebooks-eng-all-1gram-20120701-g',
+# 'googlebooks-eng-all-1gram-20120701-h',
+# 'googlebooks-eng-all-1gram-20120701-i',
+# 'googlebooks-eng-all-1gram-20120701-j',
+# 'googlebooks-eng-all-1gram-20120701-k',
+# 'googlebooks-eng-all-1gram-20120701-l',
+# 'googlebooks-eng-all-1gram-20120701-m',
+# 'googlebooks-eng-all-1gram-20120701-n',
+# 'googlebooks-eng-all-1gram-20120701-o',
+# 'googlebooks-eng-all-1gram-20120701-other',
+# 'googlebooks-eng-all-1gram-20120701-p',
+# 'googlebooks-eng-all-1gram-20120701-q',
+# 'googlebooks-eng-all-1gram-20120701-r',
+# 'googlebooks-eng-all-1gram-20120701-s',
+# 'googlebooks-eng-all-1gram-20120701-t',
+# 'googlebooks-eng-all-1gram-20120701-u',
+# 'googlebooks-eng-all-1gram-20120701-v',
+# 'googlebooks-eng-all-1gram-20120701-w',
+# 'googlebooks-eng-all-1gram-20120701-x',
+# 'googlebooks-eng-all-1gram-20120701-y',
 'googlebooks-eng-all-1gram-20120701-z'
 ]
 
@@ -113,23 +113,24 @@ class WordFreqCluster:
 
     self.r_join_r = r_join_r
 
-    return r_join_r.take(3)
+    print "r_join_r count:", r_join_r.count()
+
+    return r_join_r.collect()
 
   def map_correlation(self):
     r_join_r = self.r_join_r
     r = r_join_r.map(lambda x: find_correlation(x)) \
-                .distinct() \
                 .map(lambda x: (x[1],(x[0],x[2]))) \
                 .cache() 
 
     # r.saveAsTextFile('~/correl.txt')
 
-    asc_correl = r.sortByKey(True).take(100)
+    asc_correl = r.sortByKey(True).take(1000)
     # print 'ascending correl', asc_correl
     exportToFile(asc_correl,'asc_correl.txt')
 
 
-    desc_correl = r.sortByKey(False).take(100)
+    desc_correl = r.sortByKey(False).take(1000)
     # print 'descending correl', desc_correl
     exportToFile(desc_correl, 'desc_correl.txt')
 
@@ -192,10 +193,13 @@ if __name__ == "__main__":
   # print 'Øverst_ADV appears: ', task2.wordFrequency('b') 
   # print "Lines with a: %i, lines with b: %i" % (numAs, numBs)
 
+  results = []
   for v in r_join_r:
-    print find_correlation(v)
+    results.append(find_correlation(v))
 
-  print "map_correlation", task2.map_correlation()
+  exportToFile(results,'all_correl.txt')
+
+  # print "map_correlation", task2.map_correlation()
 
 
 
