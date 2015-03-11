@@ -91,7 +91,7 @@ class WordFreqCluster:
                         .map(lambda x:(x[1],x[0])) \
                         .sortByKey(False) \
                         .map(lambda x:(x[1],x[0])) \
-                        .take(100)
+                        .take(500)
 
 
     self.topngrams = sc.parallelize(r)
@@ -113,7 +113,7 @@ class WordFreqCluster:
 
     self.r_join_r = r_join_r
 
-    print "r_join_r count:", r_join_r.count()
+    # print "r_join_r count:", r_join_r.count()
 
     return r_join_r.collect()
 
