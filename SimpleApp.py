@@ -189,7 +189,8 @@ if __name__ == "__main__":
   print 'topWordFrequencies:', task2.topWordFrequencies()
 
   r_join_r = task2.groupByWord()
-  print 'groupByWord:', r_join_r
+  print 'groupByWord:'
+  # , r_join_r
   # print 'Øverst_ADV appears: ', task2.wordFrequency('b') 
   # print "Lines with a: %i, lines with b: %i" % (numAs, numBs)
 
